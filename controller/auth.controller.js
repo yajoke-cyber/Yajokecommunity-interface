@@ -7,6 +7,7 @@ class AuthController {
       expiresIn: 60 * 60 * 24,
       algorithm: "RS256",
     });
+    console.log("登录成功");
     ctx.body = {
       id,
       name,
