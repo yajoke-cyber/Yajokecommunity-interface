@@ -13,6 +13,7 @@ const connections = mysql.createPool({
   user: MYSQL_USER,
   password: MYSQL_PASSWORD,
 });
+// console.log(connections);
 connections.getConnection((err, connection) => {
   connection.connect((err) => {
     if (err) {
