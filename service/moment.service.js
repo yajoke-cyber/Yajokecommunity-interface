@@ -14,7 +14,7 @@ class MomentService {
   }
   async getMomentByUser(user) {
     const { id } = user;
-    const statement = `SELECT users.id,users.name,moment.content 
+    const statement = `SELECT users.id,users.name,moment.content, moment.id as  moment_id
     FROM users 
     RIGHT JOIN moment 
     ON users.id=moment.user_id 
@@ -23,12 +23,23 @@ class MomentService {
     return result[0];
   }
   async getAllMoments() {
-    const statement = `SELECT users.id,users.name,moment.content 
-    FROM moment 
-    RIGHT JOIN users 
-    ON users.id=moment.user_id `;
+    const statement = `SELECT users.id as user_id,users.name,moment.content,moment.id as moment_id
+    FROM users 
+    RIGHT JOIN moment 
+    ON users.id=moment.user_id;`;
     const result = await connections.execute(statement);
     return result[0];
+  }
+  async getSingleMomentReply(moment_id) {
+    const statement = `SELECT comment.id,comment.content,comment.user_id,users.name as uname,comment.comment_id as comment_id,comment.createAt
+    FROM comment
+    RIGHT JOIN moment 
+    ON comment.moment_id=moment.id
+		RIGHT JOIN users
+		ON comment.user_id=users.id
+		WHERE moment.id=?;`;
+    const [result] = await connections.execute(statement, [moment_id]);
+    return result;
   }
 }
 module.exports = new MomentService();

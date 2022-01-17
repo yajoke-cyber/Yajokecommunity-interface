@@ -12,7 +12,7 @@ class CommentController {
     const { moment_id, comment_id } = ctx.params;
     const { id } = ctx.user;
     const result = await addComment(content, moment_id, id, comment_id);
-    ctx.body = result;
+    ctx.body = { msg: "评论成功" };
   }
 }
 module.exports = new CommentController();
