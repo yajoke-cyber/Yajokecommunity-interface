@@ -1,8 +1,8 @@
 const service = require("../service/user.service");
 class UserController {
   async create(ctx, next) {
-    const result = await service.create(ctx.request.body);
-    ctx.body = result;
+    await service.create(ctx.request.body);
+    ctx.body = { message: "注册成功" };
   }
 }
 module.exports = new UserController();
