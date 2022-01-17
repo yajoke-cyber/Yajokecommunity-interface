@@ -1,3 +1,4 @@
+const { APP_PORT, APP_HOST, PROTOCOL } = process.env;
 const {
   getMomentByUser,
   createMoment,
@@ -6,6 +7,7 @@ const {
   getSingleMomentReply,
 } = require("../service/moment.service");
 const { getLikes } = require("../service/like.service");
+const { getAvatar } = require("../service/file.service");
 class MomentController {
   async createMoment(ctx, next) {
     const { content } = ctx.request.body;
@@ -44,6 +46,7 @@ class MomentController {
           await getLikes(1, data.id).then((res) => {
             data.likesnum = res.length;
           });
+          data.user_avatar = `${PROTOCOL}://${APP_HOST}:${APP_PORT}/avatar/${data.user_id}`;
         })();
       })
     ).then(() => {

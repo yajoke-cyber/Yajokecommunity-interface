@@ -4,5 +4,6 @@ const { uploadAvatar, getAvatar } = require("../controller/file.controller"); //
 const { avatarHandler } = require("../middleware/file.middleware");
 const avatarRouter = new Router({ prefix: "/avatar" });
 avatarRouter.post("/upload", verifyAuth, avatarHandler, uploadAvatar);
-avatarRouter.get("/", getAvatar);
+avatarRouter.get("/", verifyAuth, getAvatar);
+avatarRouter.get("/:user_id", getAvatar);
 module.exports = avatarRouter;
